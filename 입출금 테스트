@@ -16,7 +16,7 @@ public:
 	bool login(string id) {}; //사용자 로그인
 	double show() { return money; } //계좌 확인
 	double deposit(int price) { return money += price; }; //입금
-	double withdwaw(int price) { return money -= price; }; //출력
+	double withdraw(int price) { return money -= price; }; //출력
 };
 
 int main() {
@@ -45,19 +45,20 @@ int main() {
 		case 2:	//입금
 			cout << "입금하실 금액: ";
 			double in; cin >> in;
-			mcust.insert({ logid, it->second-> deposit(in) });
+			//mcust.insert({ logid, it->second-> deposit(in) });
+			it->second->deposit(in);
 			cout<<"입금 후 잔액: "<<it->second->show();
 			break;
-		case 3: cout<<"출력하실 금액: ";
+		case 3: //출금
+			cout<<"출금하실 금액: ";
 			double out; cin>>out;
 			if(out>it->second->show()) cout<<"잔액 부족";
 			else{
-			mcust.insert({logid, it->second->withdraw(out)});
+			it->second->withdraw(out);
 			cout<<"출금 후 잔액: "<<it->second->show();
 			break;
 			}
 		case 4: //종료
-			cout << it->second->getmoney()<<endl;
 			cout << "종료"; return 0;
 		default:
 			cout<<"잘못 입력하셨습니다"<<endl;
