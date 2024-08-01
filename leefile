@@ -7,20 +7,21 @@
 
 using namespace std;
 
-class customer{
+class customer {
 	string id;
 	double money;
 	map<string, customer*> mcust;
 public:
-	
+	customer() {};
 	customer(string id, double money) { this->id = id; this->money = money; };
 	string getid() { return id; }
 	string getmoney() { return to_string(money); }
 };
 
-class accountmaneger{
+class accountmaneger {
 	double money;
-
+	vector<string> loadid;
+	vector<string> loadbank;
 public:
 	accountmaneger() {};
 	double show() { return money; } //계좌 확인
@@ -31,19 +32,19 @@ public:
 };
 //map - id랑 계좌;
 //
-
+map<string, int> mcustmp;
 map<string, customer*> mcust;
 map<string, customer*> ::iterator it;
-
+accountmaneger mg;
 int main() {
-	accountmaneger mg;
+	
 	//customer cust;
 
 
-	int sel=0;
+	int sel = 0;
 	string logid;
 	string newid;
-	
+
 	while (sel != 3) {
 		cout << "-------------------------------" << endl << endl;
 		cout << "         VEDA    BANK" << endl << endl;
@@ -51,7 +52,7 @@ int main() {
 		cout << "-------------------------------" << endl << endl;
 		cout << "이용하실 숫자를 입력하시오 : ";
 		std::cin >> sel;
-		
+
 		switch (sel)
 		{
 		case 1:
@@ -112,7 +113,7 @@ int main() {
 void accountmaneger::SAVE() {
 	ofstream writefile;
 	writefile.open("banklist.txt");
-	
+
 	for (auto itr = mcust.begin(); itr != mcust.end(); itr++) {
 		string str = itr->first + " \/ " + itr->second->getmoney();
 		int len = str.size();
@@ -120,9 +121,9 @@ void accountmaneger::SAVE() {
 			if (i = len - 1) { str += "\n"; }
 			writefile.write(str.c_str(), str.size());
 		}
-		
+
 		//cout << str << endl;
-	}	
+	}
 	writefile.close();
 }
 
@@ -136,23 +137,22 @@ void  accountmaneger::LOAD() {
 	if (readfile.is_open()) {
 		while (!readfile.eof()) {
 			string tmp;
-			getline(readfile, tmp ,'/');
+			getline(readfile, tmp, '/');
 			istringstream splid(tmp);
 			istringstream splnum(tmp);
 			string str_copy;
 			string str_copy2;
-			vector<string> x1;
+			vector<double> x1;
 			vector<string> x2;
-			x1.clear();
-			x2.clear();
-			map<string, int > mcustmp;
+			
 			while (splid >> str_copy >> str_copy2) {
-				x1.push_back(str_copy);
+				x1.push_back((stod)(str_copy));
 				x2.push_back(str_copy2);
 			}
 			for (int i = 0; i < x2.size(); i++) {
-				cout << x2[i] << x1[i] << endl;
-				mcustmp.insert({ x2[i], dynamic_cast<customer*>(" " ,x1[i])});
+				cout << "id : " << x2[i] << "잔액 : " << x1[i] << endl;
+				
+				mcust.insert({ x2[i], new customer("", x1[i])});
 			}
 
 
