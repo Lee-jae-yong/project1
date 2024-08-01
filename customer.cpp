@@ -9,10 +9,10 @@ public:
 	customer() {};
 	customer();
 
-	bool login( string id) {}; //»ç¿ëÀÚ ·Î±×ÀÎ
-	double show() { return money; } //°èÁÂ È®ÀÎ
-	double in(int price) { return money + price; }; //ÀÔ±İ
-	double out(int price) { return money - price; }; //Ãâ·Â
+	bool login( string id) {}; //ì‚¬ìš©ì ë¡œê·¸ì¸
+	double show() { return money; } //ê³„ì¢Œ í™•ì¸
+	double in(int price) { return money + price; }; //ì…ê¸ˆ
+	double out(int price) { return money - price; }; //ì¶œë ¥
 
 };
 
@@ -20,6 +20,6 @@ public:
 int main() {
 	cout << "-------------------------------" << endl;
 	cout << "         VEDA    BANK" << endl;
-	cout << "  1. ·Î±×ÀÎ        2. È¸¿ø°¡ÀÔ" << endl
+	cout << "  1. ë¡œê·¸ì¸	2. íšŒì›ê°€ì…	3.ì¢…ë£Œ" << endl
 	cout << "-------------------------------"<< endl;
 }
