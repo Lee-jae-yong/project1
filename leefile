@@ -16,6 +16,7 @@ public:
 	customer(string id, double money) { this->id = id; this->money = money; };
 	string getid() { return id; }
 	string getmoney() { return to_string(money); }
+	void clearly()
 };
 
 class accountmaneger {
@@ -36,9 +37,9 @@ map<string, int> mcustmp;
 map<string, customer*> mcust;
 map<string, customer*> ::iterator it;
 accountmaneger mg;
+customer cust;
 int main() {
 	
-	//customer cust;
 
 
 	int sel = 0;
@@ -103,11 +104,7 @@ int main() {
 		case 3:
 			return 0;
 		case 10:
-			mcust.clear();
-			ofstream writefile;
-			writefile.open("banklist.txt", ios::out);
-			writefile.write("null", 0);
-			writefile.close();
+			cust.clearly();
 			return 0;
 
 
@@ -117,6 +114,14 @@ int main() {
 			return 0;
 		}
 	}
+}
+
+void customer::clearly() {
+	mcust.clear();
+	ofstream writefile("banklist.txt");
+	writefile.open("banklist.txt", ios::out);
+	writefile.write("null", 0);
+	writefile.close();
 }
 void accountmaneger::SAVE() {
 	ofstream writefile;
