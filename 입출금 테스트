@@ -52,7 +52,7 @@ int main() {
 		case 3: //출금
 			cout<<"출금하실 금액: ";
 			double out; cin>>out;
-			if(out>it->second->show()) cout<<"잔액 부족";
+			if(out>it->second->show()) {cout<<"잔액 부족"; //break;}
 			else{
 			it->second->withdraw(out);
 			cout<<"출금 후 잔액: "<<it->second->show();
