@@ -15,3 +15,11 @@ public:
 	double out(int price) { return money - price; }; //출력
 
 };
+
+
+int main() {
+	cout << "-------------------------------" << endl;
+	cout << "         VEDA    BANK" << endl;
+	cout << "  1. 로그인        2. 회원가입" << endl
+	cout << "-------------------------------"<< endl;
+}
