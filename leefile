@@ -85,6 +85,7 @@ int main() {
 					mcust.insert({ logid, new customer("", -out) });
 				case 4:
 					return 0;
+				
 
 
 				}
@@ -101,6 +102,13 @@ int main() {
 			continue;
 		case 3:
 			return 0;
+		case 10:
+			mcust.clear();
+			ofstream writefile;
+			writefile.open("banklist.txt", ios::out);
+			writefile.write("null", 0);
+			writefile.close();
+			return 0;
 
 
 		default:
@@ -112,7 +120,7 @@ int main() {
 }
 void accountmaneger::SAVE() {
 	ofstream writefile;
-	writefile.open("banklist.txt");
+	writefile.open("banklist.txt", ios::app);
 
 	for (auto itr = mcust.begin(); itr != mcust.end(); itr++) {
 		string str = itr->first + " \/ " + itr->second->getmoney();
@@ -150,9 +158,9 @@ void  accountmaneger::LOAD() {
 				x2.push_back(str_copy2);
 			}
 			for (int i = 0; i < x2.size(); i++) {
-				cout << "id : " << x2[i] << "잔액 : " << x1[i] << endl;
-				
-				mcust.insert({ x2[i], new customer("", x1[i])});
+				//cout << "id : " << x2[i] << "  잔액 : " << x1[i] << endl;
+				mcust.insert({ x2[i], new customer("", x1[i]) });
+				cout << mcust[x2[i]] << endl;
 			}
 
 
