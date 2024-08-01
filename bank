@@ -20,3 +20,26 @@ public:
 	double out(int price) { return money - price; }; //출력
 
 };
+switch (sel)
+{
+case 1:
+	cout << "ID: ";
+	string logid;
+	cin >> logid;
+	cust.login(logid);
+	//스위치 선택
+	//조회
+	//입출력
+	//종료
+
+case 2:
+	cout << "생성할 ID :";
+	string newid;
+	cin >> newid;
+
+	cout<<""
+		//삭제
+
+case 3:
+	return 0;
+}
