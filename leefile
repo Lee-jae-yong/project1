@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <fstream>
+
 using namespace std;
 
 class customer {
@@ -7,27 +9,24 @@ class customer {
 	double money;
 public:
 	customer() {};
-	customer();
 	void login(string id);//사용자 로그인
-
-
 };
 
-class accountmanger {
+class accountmaneger {
 	double money;
-	struct MyStruct
-	{
-
-	};
+	struct MyStruct;
 public:
-	accountmanger() {};
+	accountmaneger() {};
 	double show() { return money; } //계좌 확인
 	double in(int price) { return money + price; }; //입금
 	double out(int price) { return money - price; }; //출력
+	void SAVE();
+	void LOAD();
 };
 //map - id랑 계좌;
 //
 int main() {
+	accountmaneger mg;
 	customer cust;
 	cout << "-------------------------------" << endl;
 	cout << "         VEDA    BANK" << endl;
@@ -41,28 +40,57 @@ int main() {
 	{
 	case 1:
 		cout << "ID: ";
-		string logid = "\0";
-		cin >> logid;
-		cust.login(logid);
+		//string logid = "\0";
+		//cin >> logid;
+		//cust.login(logid);
+		mg.LOAD();
 
 
 
 	case 2:
 		cout << "생성할 ID :";
-		string newid = "\0";
+		//string newid; 
+		char newid;
 		cin >> newid;
+		mg.SAVE();
 
 	case 3:
 		return 0;
 	}
 
 }
+void accountmaneger::SAVE() {
+	ofstream writefile;
+	writefile.open("banklist.txt");
+	string str = " is handsome";
+	writefile.write(str.c_str(), str.size());
+	writefile.close();
+}
 
+
+
+
+
+void  accountmaneger::LOAD() {
+	ifstream readfile;
+	readfile.open("banklist.txt");
+	if (readfile.is_open()) {
+		while (!readfile.eof()) {
+			string str;
+			getline(readfile, str);
+			cout << str << endl;
+		}
+		readfile.close();
+	}
+
+}
 void customer::login(string id) {
 	if (this->id == id)
-		accountmanger();
+		cout << " 로그인 성공 " << endl;
+
+
 	else
 		cout << "로그인에 실패 하셨습니다." << endl;
-	
+
 
 }
