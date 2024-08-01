@@ -4,11 +4,13 @@
 #include <map>
 #include <vector>
 #include <sstream>
+#include <random>
 
 using namespace std;
 
 class customer {
 	string id;
+	double cashnumber;
 	double money;
 	map<string, customer*> mcust;
 public:
@@ -16,7 +18,8 @@ public:
 	customer(string id, double money) { this->id = id; this->money = money; };
 	string getid() { return id; }
 	string getmoney() { return to_string(money); }
-	void clearly()
+	void clearly();
+	string createnum();
 };
 
 class accountmaneger {
@@ -40,8 +43,6 @@ accountmaneger mg;
 customer cust;
 int main() {
 	
-
-
 	int sel = 0;
 	string logid;
 	string newid;
@@ -63,12 +64,12 @@ int main() {
 			if (mcust.find(logid) == mcust.end()) cout << "해당 ID 없음" << endl << endl;
 			else {
 				int choice;
-				cout << "=================================" << endl << endl;
-				cout << "로그인 성공. 환영합니다." << logid << "님" << endl << endl;
-				cout << "---------------------------------" << endl << endl;
-				cout << "     반갑습니다 " << logid << "님" << endl << endl;
-				cout << "1.잔액 조회   2.입금   3.출금 4. 종료" << endl << endl;
-				cout << "---------------------------------" << endl << endl;
+				cout << "========================================" << endl << endl;
+				cout << "  로그인 성공. 환영합니다." << logid << "님" << endl << endl;
+				cout << "----------------------------------------" << endl << endl;
+				cout << "       반갑습니다 " << logid << "님" << endl << endl;
+				cout << "1.조회    2.입금    3.출금   4.종료" << endl << endl;
+				cout << "-----------------------------------------" << endl << endl;
 				cout << "수행 하실 업무를  선택하세요 : ";
 				std::cin >> choice;
 				switch (choice)
@@ -86,7 +87,7 @@ int main() {
 					mcust.insert({ logid, new customer("", -out) });
 				case 4:
 					return 0;
-				
+
 
 
 				}
@@ -98,7 +99,9 @@ int main() {
 			cout << "생성할 ID :";
 			std::cin >> newid;
 			if (newid == "no") sel = 1;
+			cust.createnum();
 			mcust.insert({ newid, new customer("", 0) });
+
 			mg.SAVE();
 			continue;
 		case 3:
@@ -148,16 +151,14 @@ void  accountmaneger::LOAD() {
 	ifstream readfile;
 	readfile.open("banklist.txt");
 	if (readfile.is_open()) {
-		while (!readfile.eof()) {
-			string tmp;
-			getline(readfile, tmp, '/');
+		string tmp;
+		while (getline(readfile, tmp, '/')) {
 			istringstream splid(tmp);
-			istringstream splnum(tmp);
 			string str_copy;
 			string str_copy2;
 			vector<double> x1;
 			vector<string> x2;
-			
+
 			while (splid >> str_copy >> str_copy2) {
 				x1.push_back((stod)(str_copy));
 				x2.push_back(str_copy2);
@@ -165,7 +166,7 @@ void  accountmaneger::LOAD() {
 			for (int i = 0; i < x2.size(); i++) {
 				//cout << "id : " << x2[i] << "  잔액 : " << x1[i] << endl;
 				mcust.insert({ x2[i], new customer("", x1[i]) });
-				cout << mcust[x2[i]] << endl;
+				//cout << mcust[x2[i]] << endl;
 			}
 
 
@@ -173,4 +174,17 @@ void  accountmaneger::LOAD() {
 		readfile.close();
 	}
 
+}
+
+string customer::createnum() {
+	random_device rd;
+	mt19937 gen(rd());
+	uniform_int_distribution<int> num1(0, 399);
+	uniform_int_distribution<int> num2(100000, 700000);
+	uniform_int_distribution<int> num3(0, 99);
+	
+	cout <<"계좌 번호는 : " << num1(gen) << "\-" << num2(gen) << "\-" << num3(gen) << " 입니다." << endl;
+	string fulnum = to_string(num1(gen) + '\- ' + num2(gen) + '\- ' + num3(gen));
+	return fulnum;
+	
 }
