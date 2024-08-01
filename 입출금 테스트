@@ -14,10 +14,6 @@ public:
 	customer(string id, double money) { this->id = id; this->money = money; };
 	customer();
 
-	void addC() {};
-	void deleteC() {};
-
-
 	bool login(string id) {}; //사용자 로그인
 	double show() { return money; } //계좌 확인
 	double in(int price) { return money + price; }; //입금
@@ -25,14 +21,6 @@ public:
 	double getmoney() { return money; }
 	double addmoney(double a) { return money + a; }
 };
-class accountManager {
-	//
-public:
-	void save() {};
-	void load() {};
-};
-
-
 
 int main() {
 	//입출력
