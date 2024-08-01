@@ -6,7 +6,6 @@
 using namespace std;
 
 
-
 class customer {
 	string id;
 	double money;
@@ -23,7 +22,7 @@ public:
 int main() {
 	//입출력
 	map<string, customer*> mcust;
-	map<string, customer*> ::iterator it;//auto it
+	//map<string, customer*> ::iterator it;
 
 	cout << "입력 ID :";
 
@@ -31,6 +30,7 @@ int main() {
 	cin >> logid;
 
 	mcust.insert({ logid, new customer("", 0) });
+	auto it=mcust.find(logid);
 
 	cout << logid << " 생성완료";
 
@@ -41,21 +41,27 @@ int main() {
 		switch (choice)
 		{
 		case 1:  //잔액조회
-			cout << it->second->show(money);
+			cout << it->second->show(); break;
 		case 2:	//입금
 			cout << "입금하실 금액: ";
 			double in; cin >> in;
 			mcust.insert({ logid, it->second-> deposit(in) });
-			cout<<"입금 후 잔액: "<<it->second->show(money);
+			cout<<"입금 후 잔액: "<<it->second->show();
+			break;
 		case 3: cout<<"출력하실 금액: ";
 			double out; cin>>out;
 			if(out>it->second->show()) cout<<"잔액 부족";
 			else{
 			mcust.insert({logid, it->second->withdraw(out)});
-			cout<<"출금 후 잔액: "<<it->second->show(money);}
+			cout<<"출금 후 잔액: "<<it->second->show();
+			break;
+			}
 		case 4: //종료
 			cout << it->second->getmoney()<<endl;
 			cout << "종료"; return 0;
+		default:
+			cout<<"잘못 입력하셨습니다"<<endl;
+			break;
 		}
 	}
 }
