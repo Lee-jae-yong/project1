@@ -19,27 +19,62 @@ public:
 	double in(int price) { return money + price; }; //입금
 	double out(int price) { return money - price; }; //출력
 
-};
-switch (sel)
-{
-case 1:
-	cout << "ID: ";
-	string logid;
-	cin >> logid;
-	cust.login(logid);
-	//스위치 선택
-	//조회
+int main() {
 	//입출력
-	//종료
+	map<string, double> mcust; 
+	map<string, double> ::iterator it;
 
-case 2:
-	cout << "생성할 ID :";
-	string newid;
-	cin >> newid;
+	customer cust;
+	cout << "-------------------------------" << endl;
+	cout << "         VEDA    BANK" << endl;
+	cout << "1. 로그인 2. 회원가입	3.종료" << endl;
+	cout << "-------------------------------" << endl;
 
-	cout<<""
-		//삭제
 
-case 3:
-	return 0;
-}
+	cout << "숫자를 입력하시오 : ";
+	int sel;
+	cin >> sel;
+	switch (sel)
+	{
+	case 1:
+		cout << "ID: ";
+		string logid;
+		cin >> logid;
+		if (mcust.find(logid) == mcust.end()) cout << "해당 ID 없음" << endl;
+		else {
+			int choice;
+			cout << "로그인 성공. 환영합니다."<<logid<<" 업무 선택 : 1.잔액 조회		2.입금		3.출금" << endl;
+			cin >> choice;
+			switch (choice)
+			{
+			case 1:   cout << mcust[logid]; //잔액 조회
+			case 2:				//입금	
+			case 3://출금 
+
+			}
+
+		}
+		for (it = mcust.begin(); it != mcust.end(); it++)
+		{
+			
+		}
+		//입출력
+		//종료
+
+	case 2:
+		cout << "생성할 ID :";
+		string newid;
+		cin >> newid;
+		mcust.insert(make_pair(newid, 0));
+
+
+		cout << "";
+
+
+			//삭제
+
+	case 3:
+		return 0;
+	}
+
+
