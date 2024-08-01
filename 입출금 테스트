@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <vector>
+#include <map>
+
+using namespace std;
+
+
+
+class customer {
+	string id;
+	double money;
+public:
+	customer(string id, double money) { this->id = id; this->money = money; };
+	customer();
+
+	void addC() {};
+	void deleteC() {};
+
+
+	bool login(string id) {}; //사용자 로그인
+	double show() { return money; } //계좌 확인
+	double in(int price) { return money + price; }; //입금
+	double out(int price) { return money - price; }; //출력
+	double getmoney() { return money; }
+	double addmoney(double a) { return money + a; }
+};
+class accountManager {
+	//
+public:
+	void save() {};
+	void load() {};
+};
+
+
+
+int main() {
+	//입출력
+	map<string, customer*> mcust;
+	map<string, customer*> ::iterator it;
+
+	cout << "생성할 ID :";
+	string newid;
+	cin >> newid;
+
+	string logid;
+	cin >> logid;
+
+	mcust.insert({ newid, new customer("", 0) });
+
+	cout << newid << " 생성완료";
+
+	int choice;
+	cout << "로그인 성공. 환영합니다." << logid << " 업무 선택 : 1.잔액 조회		2.입금		3.출금" << endl;
+	cin >> choice;
+	while (1) {
+		switch (choice)
+		{
+		case 1:  //잔액조회
+			cout << mcust[logid];
+		case 2:	//입금
+			cout << "입금하실 금액: ";
+			double in; cin >> in;
+			mcust.insert({ logid, it->second  });
+		case 4: //종료
+			cout << it->second->getmoney()<<endl;
+			cout << "종료"; return 0;
+		}
+	}
+	cout << it->second->getmoney();
+}
