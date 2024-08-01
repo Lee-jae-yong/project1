@@ -3,17 +3,24 @@
 #include <fstream>
 #include <map>
 #include <vector>
+#include <sstream>
+
 using namespace std;
 
-class customer {
+class customer{
 	string id;
 	double money;
+	map<string, customer*> mcust;
 public:
-	customer() {};
+	
+	customer(string id, double money) { this->id = id; this->money = money; };
+	string getid() { return id; }
+	string getmoney() { return to_string(money); }
 };
 
-class accountmaneger {
+class accountmaneger{
 	double money;
+
 public:
 	accountmaneger() {};
 	double show() { return money; } //계좌 확인
@@ -25,67 +32,97 @@ public:
 //map - id랑 계좌;
 //
 
-map<string, double> mcust;
-map<string, double> ::iterator it;
+map<string, customer*> mcust;
+map<string, customer*> ::iterator it;
 
 int main() {
 	accountmaneger mg;
-	customer cust;
+	//customer cust;
 
 
-	cout << "-------------------------------" << endl;
-	cout << "         VEDA    BANK" << endl;
-	cout << "1. 로그인 2. 회원가입	3.종료" << endl;
-	cout << "-------------------------------" << endl;
-
-	cout << "숫자를 입력하시오 : ";
-	int sel;
-	cin >> sel;
+	int sel=0;
 	string logid;
 	string newid;
-	switch (sel)
-	{
-	case 1:
-		cout << "ID: ";
+	
+	while (sel != 3) {
+		cout << "-------------------------------" << endl << endl;
+		cout << "         VEDA    BANK" << endl << endl;
+		cout << "1. 로그인 2. 회원가입	3.종료" << endl << endl;
+		cout << "-------------------------------" << endl << endl;
+		cout << "이용하실 숫자를 입력하시오 : ";
+		std::cin >> sel;
+		
+		switch (sel)
+		{
+		case 1:
+			mg.LOAD();
+			cout << "ID: ";
+			std::cin >> logid;
+			if (mcust.find(logid) == mcust.end()) cout << "해당 ID 없음" << endl << endl;
+			else {
+				int choice;
+				cout << "=================================" << endl << endl;
+				cout << "로그인 성공. 환영합니다." << logid << "님" << endl << endl;
+				cout << "---------------------------------" << endl << endl;
+				cout << "     반갑습니다 " << logid << "님" << endl << endl;
+				cout << "1.잔액 조회   2.입금   3.출금 4. 종료" << endl << endl;
+				cout << "---------------------------------" << endl << endl;
+				cout << "수행 하실 업무를  선택하세요 : ";
+				std::cin >> choice;
+				switch (choice)
+				{
+				case 1:
+					cout << mcust[logid] << endl; //잔액 조회
+				case 2:
+					cout << "입금하실 금액: " << endl; //입금
+					double in; std::cin >> in;
+					mcust.insert({ logid, new customer("", +in) });
 
-		cin >> logid;
-		if (mcust.find(logid) == mcust.end()) cout << "해당 ID 없음" << endl;
-		else {
-			int choice;
-			cout << "로그인 성공. 환영합니다." << logid << " 업무 선택 : 1.잔액 조회		2.입금		3.출금" << endl;
-			cin >> choice;
-			switch (choice)
-			{
-			case 1:	    cout << mcust[logid];//잔액 조회
-			case 2:		cout << mcust[logid];//입금	
-			case 3:		cout << mcust[logid];//출금 
+				case 3:
+					cout << "출금하실 금액: " << endl; //출금
+					double out; std::cin >> out;
+					mcust.insert({ logid, new customer("", -out) });
+				case 4:
+					return 0;
+
+
+				}
 
 			}
+			continue;
 
+		case 2:
+			cout << "생성할 ID :";
+			std::cin >> newid;
+			if (newid == "no") sel = 1;
+			mcust.insert({ newid, new customer("", 0) });
+			mg.SAVE();
+			continue;
+		case 3:
+			return 0;
+
+
+		default:
+			cout << "1~3의 숫자를 입력하세요!" << endl;
+			cout << "은행을 종료합니다." << endl << endl;
+			return 0;
 		}
-		mg.LOAD();
-
-
-
-	case 2:
-		cout << "생성할 ID :";
-		cin >> newid;
-		mcust.insert({ newid, 0 });
-		mg.SAVE();
-
-	case 3:
-		return 0;
 	}
-
 }
 void accountmaneger::SAVE() {
 	ofstream writefile;
 	writefile.open("banklist.txt");
+	
 	for (auto itr = mcust.begin(); itr != mcust.end(); itr++) {
-		cout << itr->first << " " << itr->second << '\n';
-		string str = itr->first + "  " + to_string(itr->second);
-		writefile.write(str.c_str(), str.size());
-	}
+		string str = itr->first + " \/ " + itr->second->getmoney();
+		int len = str.size();
+		for (int i = 0; i < len; i++) {
+			if (i = len - 1) { str += "\n"; }
+			writefile.write(str.c_str(), str.size());
+		}
+		
+		//cout << str << endl;
+	}	
 	writefile.close();
 }
 
@@ -98,12 +135,29 @@ void  accountmaneger::LOAD() {
 	readfile.open("banklist.txt");
 	if (readfile.is_open()) {
 		while (!readfile.eof()) {
-			string str;
-			getline(readfile, str);
-			cout << str << endl;
+			string tmp;
+			getline(readfile, tmp ,'/');
+			istringstream splid(tmp);
+			istringstream splnum(tmp);
+			string str_copy;
+			string str_copy2;
+			vector<string> x1;
+			vector<string> x2;
+			x1.clear();
+			x2.clear();
+			map<string, int > mcustmp;
+			while (splid >> str_copy >> str_copy2) {
+				x1.push_back(str_copy);
+				x2.push_back(str_copy2);
+			}
+			for (int i = 0; i < x2.size(); i++) {
+				cout << x2[i] << x1[i] << endl;
+				mcustmp.insert({ x2[i], dynamic_cast<customer*>(" " ,x1[i])});
+			}
+
+
 		}
 		readfile.close();
 	}
 
 }
-
