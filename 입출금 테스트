@@ -39,16 +39,14 @@ int main() {
 	map<string, customer*> mcust;
 	map<string, customer*> ::iterator it;
 
-	cout << "생성할 ID :";
-	string newid;
-	cin >> newid;
+	cout << "입력 ID :";
 
 	string logid;
 	cin >> logid;
 
-	mcust.insert({ newid, new customer("", 0) });
+	mcust.insert({ logid, new customer("", 0) });
 
-	cout << newid << " 생성완료";
+	cout << logid << " 생성완료";
 
 	int choice;
 	cout << "로그인 성공. 환영합니다." << logid << " 업무 선택 : 1.잔액 조회		2.입금		3.출금" << endl;
@@ -57,7 +55,7 @@ int main() {
 		switch (choice)
 		{
 		case 1:  //잔액조회
-			cout << mcust[logid];
+			cout << it->second;
 		case 2:	//입금
 			cout << "입금하실 금액: ";
 			double in; cin >> in;
@@ -67,5 +65,4 @@ int main() {
 			cout << "종료"; return 0;
 		}
 	}
-	cout << it->second->getmoney();
 }
