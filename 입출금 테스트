@@ -30,14 +30,14 @@ int main() {
 	cin >> logid;
 
 	mcust.insert({ logid, new customer("", 0) });
-	auto it=mcust.find(logid);
+	auto it = mcust.find(logid);
 
-	cout << logid << " 생성완료";
-
-	int choice;
-	cout << "로그인 성공. 환영합니다." << logid << " 업무 선택 : 1.잔액 조회		2.입금		3.출금" << endl;
-	cin >> choice;
+	cout << "로그인 성공. 환영합니다." << logid << "님" << endl;
+	
 	while (1) {
+		cout << " 업무 선택 : 1.잔액 조회	2.입금	3.출금	4.종료		" << "입력하실 번호: ";
+		int choice;
+		cin >> choice;
 		switch (choice)
 		{
 		case 1:  //잔액조회
@@ -47,22 +47,25 @@ int main() {
 			double in; cin >> in;
 			//mcust.insert({ logid, it->second-> deposit(in) });
 			it->second->deposit(in);
-			cout<<"입금 후 잔액: "<<it->second->show();
+			cout << "입금 후 잔액: " << it->second->show() << endl;;
+			cout << "끝" << endl;
 			break;
 		case 3: //출금
-			cout<<"출금하실 금액: ";
-			double out; cin>>out;
-			if(out>it->second->show()) {cout<<"잔액 부족"; //break;}
-			else{
-			it->second->withdraw(out);
-			cout<<"출금 후 잔액: "<<it->second->show();
-			break;
+			cout << "출금하실 금액: ";
+			double out; cin >> out;
+			if (out > it->second->show()) {
+				cout << "잔액 부족"; break;
+			}
+			else {
+				it->second->withdraw(out);
+				cout << "출금 후 잔액: " << it->second->show();
+				break;
 			}
 		case 4: //종료
-			cout << "종료"; return 0;
+			cout << "종료"; return 0; break;
 		default:
-			cout<<"잘못 입력하셨습니다"<<endl;
+			cout << "잘못 입력하셨습니다" << endl;
 			break;
 		}
 	}
-}
+	}
