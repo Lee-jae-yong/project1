@@ -54,20 +54,20 @@ int main() {
 	
 	string logid;
 	string newid;
-	while (sel != 3) {
+	while (1) {
 		cout << "-------------------------------" << endl << endl;
 		cout << "         VEDA    BANK" << endl << endl;
 		cout << "1. 로그인 2. 회원가입	3.종료" << endl << endl;
 		cout << "-------------------------------" << endl << endl;
 		cout << "이용하실 숫자를 입력하시오 : ";
 		
-		std::cin >> sel;
+		cin >> sel;
 		switch (sel)
 		{
 		case 1:
 			mg.LOAD();
 			cout << "ID: ";
-			std::cin >> logid;
+			cin >> logid;
 			if (mcust.find(logid) == mcust.end()) cout << "해당 ID 없음" << endl << endl;
 			else {
 				
@@ -115,9 +115,10 @@ int main() {
 						cout << "잘못 입력하셨습니다" << endl;
 						break;
 					}
+					break;
 				}
 			}
-
+			break;
 			
 			
 
@@ -126,15 +127,18 @@ int main() {
 			std::cin >> newid;
 			if (newid == "no") sel = 1;
 			cust.createnum();
-			mcust.insert({ newid, new customer("", 0, 0) });
+			mcust.insert({ newid, new customer("", 0 ,"")});
 
 			mg.SAVE();
-			continue;
+			break;
+
 		case 3:
+			
 			return 0;
 		case 10:
 			cust.clearly();
 			return 0;
+			
 
 
 		default:
@@ -213,6 +217,6 @@ string customer::createnum() {
 
 	cout << "계좌 번호는 : " << num1(gen) << "\-" << num2(gen) << "\-" << num3(gen) << " 입니다." << endl;
 	string fulnum = to_string(num1(gen) + '\- ' + num2(gen) + '\- ' + num3(gen));
-	return fulnum;
+	return this->cashnumber = fulnum;
 
 }
